@@ -1,0 +1,318 @@
+/* Operational states remain visible outside account filters and navigation. */
+.cyberpunk-theme .cyberpunk-notice {
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  width: max-content;
+  max-width: min(520px, calc(100vw - 32px));
+  min-height: 44px;
+  padding: 14px 18px;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--cyberpunk-ink);
+  border-radius: 2px;
+  background: var(--cyberpunk-panel);
+  color: var(--cyberpunk-ink);
+  box-shadow: 0 8px 28px #00000026;
+  text-align: center;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}
+.cyberpunk-theme .cyberpunk-notice[data-kind="success"] {
+  border-color: var(--cyberpunk-green);
+}
+.cyberpunk-theme .cyberpunk-notice[data-kind="error"] {
+  border-color: var(--cyberpunk-red);
+}
+
+.cyberpunk-theme .cyberpunk-states {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.cyberpunk-theme .cyberpunk-state {
+  padding: 8px 10px;
+  border: 1px solid var(--cyberpunk-line);
+  color: var(--cyberpunk-muted);
+  font-size: 12px;
+}
+
+.cyberpunk-theme .cyberpunk-operation-region,
+.cyberpunk-theme .cyberpunk-queue-region {
+  margin-bottom: 20px;
+  padding: 16px;
+  border: 1px solid var(--cyberpunk-amber);
+  background: var(--cyberpunk-amber-soft);
+}
+.cyberpunk-theme .cyberpunk-operation-region > .cyberpunk-group-title,
+.cyberpunk-theme .cyberpunk-queue-region > .cyberpunk-group-title {
+  margin-bottom: 8px;
+  color: var(--cyberpunk-ink);
+  font-weight: 700;
+}
+.cyberpunk-theme .cyberpunk-operation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 12px;
+  font-size: 12px;
+}
+.cyberpunk-theme .cyberpunk-operation > * {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.cyberpunk-theme .cyberpunk-queue-region > .cyberpunk-button {
+  margin: 4px 6px 4px 0;
+}
+
+.cyberpunk-theme .cyberpunk-management-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.cyberpunk-theme .cyberpunk-section-title {
+  font-size: 21px;
+  line-height: 1.4;
+}
+.cyberpunk-theme .cyberpunk-management-groups {
+  border-top: 1px solid var(--cyberpunk-ink);
+}
+.cyberpunk-theme .cyberpunk-management-group {
+  border-bottom: 1px solid var(--cyberpunk-line);
+}
+
+.cyberpunk-theme .cyberpunk-group-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 4px;
+  border: 0;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+.cyberpunk-theme .cyberpunk-group-toggle::after {
+  content: "+";
+  flex: 0 0 auto;
+  font-size: 19px;
+  font-weight: 400;
+}
+.cyberpunk-theme .cyberpunk-group-toggle[aria-expanded="true"]::after {
+  content: "−";
+}
+.cyberpunk-theme .cyberpunk-management-list {
+  display: grid;
+  padding-bottom: 10px;
+}
+
+.cyberpunk-theme .cyberpunk-feature {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .cyberpunk-theme .cyberpunk-feature:not(:disabled):hover,
+  .cyberpunk-theme .cyberpunk-group-toggle:hover {
+    background: var(--cyberpunk-raised);
+  }
+}
+@media (hover: none) {
+  .cyberpunk-theme .cyberpunk-feature:not(:disabled):active,
+  .cyberpunk-theme .cyberpunk-group-toggle:active {
+    background: var(--cyberpunk-raised);
+  }
+}
+.cyberpunk-theme .cyberpunk-feature small {
+  color: var(--cyberpunk-muted);
+  font-size: 12px;
+}
+
+.cyberpunk-theme[data-density="compact"] .cyberpunk-card {
+  padding-block: 12px;
+}
+.cyberpunk-theme[data-density="compact"] .cyberpunk-group + .cyberpunk-group {
+  margin-top: 12px;
+}
+
+.cyberpunk-theme[data-density="compact"] .cyberpunk-card-header {
+  margin-bottom: 12px;
+}
+
+.cyberpunk-theme .cyberpunk-states:empty {
+  display: none;
+}
+.cyberpunk-theme .cyberpunk-management-groups {
+  max-width: 900px;
+}
+.cyberpunk-theme .cyberpunk-management-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding-bottom: 16px;
+}
+.cyberpunk-theme .cyberpunk-feature {
+  border: 1px solid var(--cyberpunk-line);
+  background: var(--cyberpunk-panel);
+}
+.cyberpunk-theme .cyberpunk-management-heading {
+  margin-top: 28px;
+}
+
+@media (max-width: 1080px) {
+  .cyberpunk-theme {
+    padding-inline: 28px;
+  }
+  .cyberpunk-theme .cyberpunk-account-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cyberpunk-theme .cyberpunk-display-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 680px) {
+  .cyberpunk-theme {
+    padding: 0 20px 28px;
+  }
+  .cyberpunk-theme .cyberpunk-topbar-inner {
+    flex-wrap: wrap;
+    gap: 14px;
+    padding-bottom: 14px;
+  }
+  .cyberpunk-theme .cyberpunk-topbar {
+    padding-top: 16px;
+  }
+  .cyberpunk-theme .cyberpunk-brand {
+    flex: 1 1 0;
+  }
+  .cyberpunk-theme .cyberpunk-topbar-actions {
+    flex: 0 0 auto;
+  }
+  .cyberpunk-theme .cyberpunk-meta > :last-child {
+    display: none;
+  }
+
+  .cyberpunk-theme .cyberpunk-toolbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .cyberpunk-theme .cyberpunk-search {
+    grid-column: 1/-1;
+  }
+  .cyberpunk-theme .cyberpunk-account-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+  .cyberpunk-theme .cyberpunk-card {
+    padding: 20px;
+  }
+  .cyberpunk-theme .cyberpunk-card-header {
+    margin-bottom: 20px;
+  }
+  .cyberpunk-theme .cyberpunk-display-panel {
+    gap: 12px;
+    padding: 14px;
+  }
+  .cyberpunk-theme .cyberpunk-management-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cyberpunk-theme .cyberpunk-operation-region,
+  .cyberpunk-theme .cyberpunk-queue-region {
+    padding: 12px;
+  }
+}
+@media (max-width: 360px) {
+  .cyberpunk-theme {
+    padding-inline: 14px;
+  }
+  .cyberpunk-theme .cyberpunk-card {
+    padding-inline: 16px;
+  }
+  .cyberpunk-theme .cyberpunk-display-panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cyberpunk-theme .cyberpunk-otp-value {
+    font-size: 34px;
+  }
+  .cyberpunk-theme .cyberpunk-otp-value[data-digits="8"] {
+    font-size: 28px;
+  }
+  .cyberpunk-theme .cyberpunk-otp-value[data-digits="9"],
+  .cyberpunk-theme .cyberpunk-otp-value[data-digits="10"] {
+    font-size: 24px;
+  }
+  .cyberpunk-theme .cyberpunk-badge {
+    max-width: 13ch;
+    text-align: right;
+  }
+}
+.cyberpunk-theme[data-reduced-motion="true"] *,
+.cyberpunk-theme[data-reduced-motion="true"] *::before,
+.cyberpunk-theme[data-reduced-motion="true"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cyberpunk-theme *,
+  .cyberpunk-theme *::before,
+  .cyberpunk-theme *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (forced-colors: active) {
+  .cyberpunk-theme {
+    background-image: none;
+  }
+
+  .cyberpunk-theme .cyberpunk-button,
+  .cyberpunk-theme .cyberpunk-card,
+  .cyberpunk-theme .cyberpunk-menu-popover,
+  .cyberpunk-theme .cyberpunk-notice {
+    border-color: ButtonText;
+    box-shadow: none;
+  }
+  .cyberpunk-theme .cyberpunk-button[aria-expanded="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: -3px;
+  }
+  .cyberpunk-theme .cyberpunk-copy-code:disabled {
+    color: GrayText;
+  }
+  .cyberpunk-theme .cyberpunk-progress {
+    background: Canvas;
+    outline: 1px solid CanvasText;
+  }
+  .cyberpunk-theme .cyberpunk-progress-fill {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+  .cyberpunk-theme .cyberpunk-otp-value {
+    text-shadow: none !important;
+  }
+}
+
+/* The whole card copies its current code. */
+.cyberpunk-theme .cyberpunk-card {
+  cursor: pointer;
+}

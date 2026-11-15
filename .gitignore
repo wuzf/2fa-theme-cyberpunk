@@ -1,0 +1,12 @@
+node_modules/
+dist/
+release/
+test-results/
+.dev/
+*.log
+
+# Local runtime and credentials
+.wrangler/
+.dev.vars
+.env
+.env.*

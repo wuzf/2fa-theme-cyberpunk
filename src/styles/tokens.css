@@ -1,0 +1,57 @@
+.cyberpunk-theme {
+  color-scheme: light;
+  /* Light scheme: a pale violet-white vault, hot magenta for accents, cyan for
+     codes and a fluorescent fill on the command keys. */
+  --cyberpunk-canvas: #f2f0fa;
+  --cyberpunk-panel: #ffffff;
+  --cyberpunk-raised: #f6f3fd;
+  --cyberpunk-ink: #1a1736;
+  --cyberpunk-muted: #565473;
+  --cyberpunk-line: #cfc6e8;
+  --cyberpunk-track: #e4def5;
+  --cyberpunk-green: #b4116b;
+  --cyberpunk-green-soft: #fbe6f1;
+  --cyberpunk-green-fill: #e9ff47;
+  --cyberpunk-accent-text: #ffffff;
+  --cyberpunk-code: #00788a;
+  --cyberpunk-red: #b82d53;
+  --cyberpunk-amber: #885500;
+  --cyberpunk-amber-soft: #fff4dc;
+  --cyberpunk-grid: #7b5cd008;
+  --cyberpunk-neon-cyan: #00d4ec;
+  --cyberpunk-neon-magenta: #ff2fb3;
+  --cyberpunk-font:
+    "Bahnschrift", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --cyberpunk-display:
+    "Consolas", "SFMono-Regular", "Liberation Mono", monospace;
+  --cyberpunk-focus: 2px solid var(--cyberpunk-code);
+}
+
+.cyberpunk-theme[data-color-scheme="dark"] {
+  color-scheme: dark;
+  --cyberpunk-canvas: #080c17;
+  --cyberpunk-panel: #111a2b;
+  --cyberpunk-raised: #172237;
+  --cyberpunk-ink: #eef4ff;
+  --cyberpunk-muted: #99a9c0;
+  --cyberpunk-line: #2c3c53;
+  --cyberpunk-track: #23324a;
+  --cyberpunk-green: #e7f56b;
+  --cyberpunk-green-soft: #e7f56b0c;
+  --cyberpunk-accent-text: #101522;
+  --cyberpunk-code: #66e9ef;
+  --cyberpunk-red: #ff85a7;
+  --cyberpunk-amber: #ffd07b;
+  --cyberpunk-amber-soft: #30291d;
+  --cyberpunk-grid: #7c9cce09;
+}
+
+.cyberpunk-theme[data-accent="cyan"] {
+  --cyberpunk-green: #00788a;
+  --cyberpunk-green-soft: #e1f4f6;
+  --cyberpunk-green-fill: #5ff3ff;
+}
+.cyberpunk-theme[data-color-scheme="dark"][data-accent="cyan"] {
+  --cyberpunk-green: #66e9ef;
+  --cyberpunk-green-soft: #66e9ef0c;
+}

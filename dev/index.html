@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Neon Vault · 霓虹密库 · 示例预览</title>
+    <link rel="stylesheet" href="/src/styles/tokens.css" />
+    <link rel="stylesheet" href="/src/styles/components.css" />
+    <link rel="stylesheet" href="/src/styles/application.css" />
+    <link rel="stylesheet" href="/src/styles/hud.css" />
+    <style>
+      body {
+        margin: 0;
+      }
+      .dev-banner {
+        padding: 8px 20px;
+        background: #101825;
+        color: #a8b7cd;
+        font: 12px/1.5 system-ui;
+        border-bottom: 1px solid #2b3d54;
+      }
+      .dev-banner strong {
+        display: inline;
+        margin-right: 10px;
+      }
+      #dev-action-dialog {
+        box-sizing: border-box;
+        width: min(440px, calc(100vw - 32px));
+        max-height: calc(100dvh - 32px);
+        padding: 28px;
+        border: 1px solid var(--preview-line, #2c3c53);
+        border-top: 2px solid var(--preview-accent, #e7f56b);
+        border-radius: 4px;
+        background: var(--preview-surface, #111a2b);
+        color: var(--preview-text, #eef4ff);
+        font:
+          14px/1.7 system-ui,
+          sans-serif;
+        overflow-wrap: anywhere;
+      }
+      #dev-action-dialog::backdrop {
+        background: #080c17bb;
+      }
+      #dev-action-context {
+        margin: 0 0 6px;
+        color: var(--preview-muted, #99a9c0);
+        font-size: 12px;
+      }
+      #dev-action-title {
+        margin: 0;
+        font-size: 22px;
+        line-height: 1.4;
+      }
+      #dev-action-description {
+        margin: 16px 0 24px;
+      }
+      #dev-action-dialog form {
+        margin: 0;
+        text-align: right;
+      }
+      #dev-action-close {
+        min-width: 88px;
+        min-height: 44px;
+        padding: 8px 16px;
+        border: 1px solid var(--preview-accent, #e7f56b);
+        border-radius: 3px;
+        background: var(--preview-accent, #e7f56b);
+        color: var(--preview-accentText, #101522);
+        font: inherit;
+        cursor: pointer;
+      }
+      #dev-action-close:focus-visible {
+        outline: 2px solid var(--preview-text, #eef4ff);
+        outline-offset: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="dev-banner">
+      <strong>主题示例预览</strong>
+      使用虚构账户；复制和管理操作仅演示交互，不写入剪贴板或服务器。
+    </aside>
+    <div id="app"></div>
+    <dialog
+      id="dev-action-dialog"
+      aria-labelledby="dev-action-title"
+      aria-describedby="dev-action-description"
+    >
+      <p id="dev-action-context"></p>
+      <h2 id="dev-action-title"></h2>
+      <p id="dev-action-description"></p>
+      <form method="dialog">
+        <button id="dev-action-close" type="submit" autofocus></button>
+      </form>
+    </dialog>
+    <script type="module" src="/dev/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1104 @@
+/* Neon Vault HUD: reactor header, service rail, clipped vault panels and a
+   command deck. Clipping lives on pseudo-elements so menus are never cut. */
+.cyberpunk-theme {
+  --cyberpunk-hud-edge: color-mix(
+    in srgb,
+    var(--cyberpunk-code) 55%,
+    transparent
+  );
+  --cyberpunk-hud-dim: color-mix(
+    in srgb,
+    var(--cyberpunk-code) 16%,
+    transparent
+  );
+  --cyberpunk-cut: 14px;
+  padding: 0 32px 32px;
+}
+.cyberpunk-theme[data-color-scheme="dark"] {
+  --cyberpunk-canvas: #05070e;
+  --cyberpunk-panel: #0b1120;
+  --cyberpunk-raised: #121b30;
+  --cyberpunk-line: #23324c;
+}
+.cyberpunk-theme[data-grid="true"] {
+  background-image:
+    radial-gradient(1100px 480px at 50% -200px, #00a7c21a, transparent 70%),
+    linear-gradient(var(--cyberpunk-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cyberpunk-grid) 1px, transparent 1px);
+  background-size:
+    auto,
+    32px 32px,
+    32px 32px;
+}
+.cyberpunk-theme[data-color-scheme="dark"][data-grid="true"] {
+  background-image:
+    radial-gradient(1200px 520px at 50% -180px, #1de9ff1f, transparent 70%),
+    radial-gradient(700px 420px at 100% 100%, #ff2e8a14, transparent 70%),
+    linear-gradient(var(--cyberpunk-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cyberpunk-grid) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    32px 32px,
+    32px 32px;
+}
+.cyberpunk-theme[data-grid="true"]::before {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 2px,
+    color-mix(in srgb, var(--cyberpunk-ink) 4%, transparent) 2px 3px
+  );
+  pointer-events: none;
+}
+.cyberpunk-theme .cyberpunk-console {
+  max-width: 1400px; /* the default interface's width */
+}
+
+/* Header: brand · reactor · command */
+.cyberpunk-theme .cyberpunk-topbar {
+  padding-top: 16px;
+}
+.cyberpunk-theme .cyberpunk-topbar-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  padding-bottom: 12px;
+  border-bottom: 0;
+}
+.cyberpunk-theme .cyberpunk-topbar-actions {
+  justify-self: end;
+}
+.cyberpunk-theme .cyberpunk-meta {
+  position: relative;
+  padding: 8px 0;
+  border: 0;
+  font-family: var(--cyberpunk-display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.cyberpunk-theme .cyberpunk-meta::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--cyberpunk-hud-edge) 20%,
+    var(--cyberpunk-hud-edge) 80%,
+    transparent
+  );
+}
+.cyberpunk-theme .cyberpunk-brand-name {
+  font-size: 21px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.cyberpunk-theme[data-glow="true"][data-color-scheme="dark"]
+  .cyberpunk-brand-name {
+  text-shadow:
+    0 0 12px #66e9ef66,
+    2px 0 #ff2e8a55;
+}
+.cyberpunk-theme .cyberpunk-reactor {
+  position: relative;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  width: 96px;
+  height: 96px;
+  color: var(--cyberpunk-code);
+  font-family: var(--cyberpunk-display);
+}
+.cyberpunk-theme .cyberpunk-reactor::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid var(--cyberpunk-hud-dim);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--cyberpunk-code) 14%, transparent),
+    transparent 70%
+  );
+}
+.cyberpunk-theme .cyberpunk-reactor-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    currentColor calc(var(--cyberpunk-reactor, 0) * 360deg),
+    var(--cyberpunk-track) 0
+  );
+  -webkit-mask:
+    radial-gradient(
+      farthest-side,
+      transparent calc(100% - 9px),
+      #000 calc(100% - 8px)
+    ),
+    repeating-conic-gradient(#000 0 10deg, transparent 10deg 12deg);
+  -webkit-mask-composite: source-in;
+  mask:
+    radial-gradient(
+        farthest-side,
+        transparent calc(100% - 9px),
+        #000 calc(100% - 8px)
+      )
+      intersect,
+    repeating-conic-gradient(#000 0 10deg, transparent 10deg 12deg);
+}
+.cyberpunk-theme[data-glow="true"][data-color-scheme="dark"]
+  .cyberpunk-reactor-ring {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+.cyberpunk-theme .cyberpunk-reactor-value {
+  position: relative;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.cyberpunk-theme .cyberpunk-reactor-unit {
+  position: relative;
+  color: var(--cyberpunk-muted);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.cyberpunk-theme .cyberpunk-reactor[data-expiring="true"] {
+  color: var(--cyberpunk-red);
+}
+
+/* Command cluster: a slanted command key */
+.cyberpunk-theme .cyberpunk-topbar-actions .cyberpunk-button {
+  min-width: 132px;
+  padding-inline: 22px;
+  border: 0;
+  border-radius: 0;
+  clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+  background: var(--cyberpunk-green);
+  color: var(--cyberpunk-accent-text);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.cyberpunk-theme .cyberpunk-topbar-actions .cyberpunk-button::before {
+  content: "◇";
+  font-size: 12px;
+}
+@media (hover: hover) {
+  .cyberpunk-theme
+    .cyberpunk-topbar-actions
+    .cyberpunk-button:not(:disabled):hover {
+    background: var(--cyberpunk-code);
+  }
+}
+@media (hover: none) {
+  .cyberpunk-theme
+    .cyberpunk-topbar-actions
+    .cyberpunk-button:not(:disabled):active {
+    background: var(--cyberpunk-code);
+  }
+}
+
+/* Account page: rail + body */
+.cyberpunk-theme .cyberpunk-account-page {
+  display: grid;
+  grid-template-columns: 228px minmax(0, 1fr);
+  align-items: start;
+  gap: 28px;
+}
+.cyberpunk-theme .cyberpunk-account-body {
+  min-width: 0;
+}
+.cyberpunk-theme .cyberpunk-rail {
+  position: sticky;
+  top: 16px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px;
+  max-height: calc(100svh - 32px);
+  min-width: 0;
+}
+.cyberpunk-theme .cyberpunk-rail-title {
+  color: var(--cyberpunk-muted);
+  font: 11px var(--cyberpunk-display);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.cyberpunk-theme .cyberpunk-rail-list {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-height: 0;
+  padding: 2px 6px 2px 2px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+.cyberpunk-theme .cyberpunk-rail-tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 40px;
+  padding: 8px 12px 8px 16px;
+  border: 0;
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  background: color-mix(in srgb, var(--cyberpunk-panel) 80%, transparent);
+  color: var(--cyberpunk-muted);
+  text-align: left;
+  cursor: pointer;
+}
+.cyberpunk-theme .cyberpunk-rail-tab::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background: var(--cyberpunk-line);
+}
+@media (hover: hover) {
+  .cyberpunk-theme .cyberpunk-rail-tab:not(:disabled):hover {
+    background: var(--cyberpunk-raised);
+    color: var(--cyberpunk-ink);
+  }
+}
+@media (hover: none) {
+  .cyberpunk-theme .cyberpunk-rail-tab:not(:disabled):active {
+    background: var(--cyberpunk-raised);
+    color: var(--cyberpunk-ink);
+  }
+}
+.cyberpunk-theme .cyberpunk-rail-tab[aria-pressed="true"] {
+  background: linear-gradient(90deg, var(--cyberpunk-hud-dim), transparent);
+  color: var(--cyberpunk-code);
+}
+.cyberpunk-theme .cyberpunk-rail-tab[aria-pressed="true"]::before {
+  background: var(--cyberpunk-code);
+  box-shadow: 0 0 10px var(--cyberpunk-code);
+}
+.cyberpunk-theme .cyberpunk-rail-tab:focus-visible {
+  outline-offset: -2px;
+}
+.cyberpunk-theme .cyberpunk-rail-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cyberpunk-theme .cyberpunk-rail-count {
+  flex: 0 0 auto;
+  font: 11px var(--cyberpunk-display);
+  opacity: 0.8;
+}
+.cyberpunk-theme .cyberpunk-service-filter {
+  display: none;
+}
+.cyberpunk-theme .cyberpunk-toolbar {
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: 20px;
+}
+.cyberpunk-theme .cyberpunk-search,
+.cyberpunk-theme .cyberpunk-input,
+.cyberpunk-theme [data-action="display"] {
+  border-radius: 0;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 10px) 0,
+    100% 10px,
+    100% 100%,
+    10px 100%,
+    0 calc(100% - 10px)
+  );
+}
+.cyberpunk-theme .cyberpunk-search {
+  border-color: var(--cyberpunk-hud-edge);
+  background: color-mix(in srgb, var(--cyberpunk-panel) 85%, transparent);
+}
+.cyberpunk-theme .cyberpunk-search:focus-within {
+  outline: 0;
+  box-shadow: inset 0 0 0 2px var(--cyberpunk-code);
+}
+.cyberpunk-theme [data-action="display"] {
+  border-color: var(--cyberpunk-hud-edge);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.cyberpunk-theme [data-action="display"]:focus-visible {
+  outline-offset: -3px;
+}
+.cyberpunk-theme .cyberpunk-display-panel {
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+}
+
+/* Vault panels */
+/* Staggered vault wall: every five panels form one wide and one medium
+   panel over three standard ones, so the wall never reads as a uniform grid. */
+.cyberpunk-theme .cyberpunk-account-grid {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 14px;
+}
+.cyberpunk-theme .cyberpunk-account-grid > .cyberpunk-card {
+  grid-column: span 4;
+}
+.cyberpunk-theme .cyberpunk-account-grid > .cyberpunk-card:nth-child(5n + 1) {
+  grid-column: span 7;
+}
+.cyberpunk-theme .cyberpunk-account-grid > .cyberpunk-card:nth-child(5n + 2) {
+  grid-column: span 5;
+}
+/* A group's last row is filled: a lone card spans the row, two standard
+   cards share it. Wide and medium together already fill theirs. */
+.cyberpunk-theme
+  .cyberpunk-account-grid
+  > .cyberpunk-card:nth-child(5n + 1):last-child {
+  grid-column: auto / span 12;
+}
+@media (min-width: 1181px) {
+  .cyberpunk-theme
+    .cyberpunk-account-grid
+    > .cyberpunk-card:nth-child(5n + 3):last-child {
+    grid-column: auto / span 12;
+  }
+  .cyberpunk-theme
+    .cyberpunk-account-grid
+    > .cyberpunk-card:nth-child(5n + 3):nth-last-child(2),
+  .cyberpunk-theme
+    .cyberpunk-account-grid
+    > .cyberpunk-card:nth-child(5n + 4):last-child {
+    grid-column: auto / span 6;
+  }
+}
+.cyberpunk-theme
+  .cyberpunk-account-grid
+  > .cyberpunk-card:nth-child(5n + 1)
+  .cyberpunk-otp-value {
+  /* No glow of its own: a wide halo blurs the large digits. In the dark
+     scheme it keeps the faint halo every code has. */
+  font-size: clamp(36px, 4vw, 52px);
+}
+.cyberpunk-theme .cyberpunk-card {
+  isolation: isolate;
+  padding: 18px 18px 16px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.cyberpunk-theme .cyberpunk-card::before,
+.cyberpunk-theme .cyberpunk-card::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  clip-path: polygon(
+    var(--cyberpunk-cut) 0,
+    100% 0,
+    100% calc(100% - var(--cyberpunk-cut)),
+    calc(100% - var(--cyberpunk-cut)) 100%,
+    0 100%,
+    0 var(--cyberpunk-cut)
+  );
+  opacity: 1;
+  pointer-events: none;
+}
+.cyberpunk-theme .cyberpunk-card::before {
+  inset: 0;
+  width: auto;
+  height: auto;
+  background: linear-gradient(
+    135deg,
+    var(--cyberpunk-hud-edge),
+    var(--cyberpunk-line) 35%,
+    var(--cyberpunk-line) 65%,
+    color-mix(in srgb, var(--cyberpunk-green) 60%, transparent)
+  );
+}
+.cyberpunk-theme .cyberpunk-card::after {
+  inset: 1px;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--cyberpunk-code) 7%, transparent),
+      transparent 45%
+    ),
+    var(--cyberpunk-panel);
+}
+/* Only a mouse lights the card, and only where a click copies the current code:
+   not on the menu (the card flashed when it was opened) or another button such as
+   "next", which copies the next code. Touch keeps the hover after a tap. */
+@media (hover: hover) {
+  .cyberpunk-theme
+    .cyberpunk-card:hover:not(:has(.cyberpunk-account-menu:hover)):not(
+      :has(button:not([data-action="copy"]):hover)
+    )::before {
+    background: linear-gradient(
+      135deg,
+      var(--cyberpunk-code),
+      var(--cyberpunk-green)
+    );
+  }
+  .cyberpunk-theme[data-glow="true"][data-color-scheme="dark"]
+    .cyberpunk-card:hover:not(
+      :has(.cyberpunk-account-menu:hover),
+      [data-menu-open="true"]
+    ):not(:has(button:not([data-action="copy"]):hover)) {
+    filter: drop-shadow(0 0 10px #66e9ef33);
+  }
+}
+/* The code copies the same as the rest of the card, which is already lit, so it
+   adds no highlight of its own. */
+@media (hover: hover) {
+  .cyberpunk-theme .cyberpunk-card .cyberpunk-copy-code:not(:disabled):hover {
+    background: transparent;
+  }
+}
+@media (hover: none) {
+  .cyberpunk-theme .cyberpunk-card .cyberpunk-copy-code:not(:disabled):active {
+    background: transparent;
+  }
+}
+.cyberpunk-theme .cyberpunk-card:has(:focus-visible)::before {
+  background: linear-gradient(
+    135deg,
+    var(--cyberpunk-code),
+    var(--cyberpunk-green)
+  );
+}
+.cyberpunk-theme[data-glow="true"][data-color-scheme="dark"]
+  .cyberpunk-card:has(:focus-visible):not([data-menu-open="true"]) {
+  filter: drop-shadow(0 0 10px #66e9ef33);
+}
+.cyberpunk-theme .cyberpunk-card-header {
+  margin-bottom: 14px;
+}
+.cyberpunk-theme .cyberpunk-service-mark {
+  border: 0;
+  border-radius: 0;
+  clip-path: polygon(30% 0, 100% 0, 100% 70%, 70% 100%, 0 100%, 0 30%);
+  background: var(--cyberpunk-hud-dim);
+  font-family: var(--cyberpunk-display);
+}
+.cyberpunk-theme .cyberpunk-otp-label {
+  justify-content: flex-start;
+  font-family: var(--cyberpunk-display);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.cyberpunk-theme .cyberpunk-otp-label::before {
+  content: "//";
+  color: var(--cyberpunk-code);
+}
+.cyberpunk-theme .cyberpunk-copy-code {
+  width: calc(100% + 16px);
+  margin-inline: -8px;
+  padding: 2px 8px;
+  border-radius: 0;
+}
+.cyberpunk-theme .cyberpunk-otp-value {
+  font-size: 34px;
+  font-weight: 700;
+}
+.cyberpunk-theme .cyberpunk-otp-next {
+  font-family: var(--cyberpunk-display);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.cyberpunk-theme .cyberpunk-progress {
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--cyberpunk-track) 0 6px,
+    transparent 6px 8px
+  );
+}
+.cyberpunk-theme .cyberpunk-progress-fill {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--cyberpunk-code) 0 6px,
+    transparent 6px 8px
+  );
+}
+.cyberpunk-theme
+  .cyberpunk-expiry[data-expiring="true"]
+  .cyberpunk-progress-fill {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--cyberpunk-amber) 0 6px,
+    transparent 6px 8px
+  );
+}
+.cyberpunk-theme .cyberpunk-expiry-label {
+  font-family: var(--cyberpunk-display);
+}
+.cyberpunk-theme .cyberpunk-group-title {
+  color: var(--cyberpunk-code);
+  font-family: var(--cyberpunk-display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.cyberpunk-theme .cyberpunk-group-title::before {
+  content: "▸";
+}
+.cyberpunk-theme .cyberpunk-group-title::after {
+  background: linear-gradient(90deg, var(--cyberpunk-hud-edge), transparent);
+}
+.cyberpunk-theme .cyberpunk-menu-popover {
+  border-color: var(--cyberpunk-hud-edge);
+  border-radius: 0;
+}
+.cyberpunk-theme .cyberpunk-empty-state {
+  border-color: var(--cyberpunk-hud-edge);
+  border-style: dashed;
+  background: color-mix(in srgb, var(--cyberpunk-panel) 80%, transparent);
+}
+
+/* Command deck */
+.cyberpunk-theme .cyberpunk-management-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 1040px;
+  border: 0;
+}
+.cyberpunk-theme .cyberpunk-management-group {
+  position: relative;
+  isolation: isolate;
+  align-self: start;
+  padding: 6px 16px;
+  border: 0;
+}
+.cyberpunk-theme .cyberpunk-management-group::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border: 1px solid var(--cyberpunk-line);
+  border-left: 3px solid var(--cyberpunk-hud-edge);
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+  background: color-mix(in srgb, var(--cyberpunk-panel) 88%, transparent);
+}
+.cyberpunk-theme .cyberpunk-management-group:has([aria-expanded="true"]) {
+  grid-column: 1 / -1;
+}
+.cyberpunk-theme
+  .cyberpunk-management-group:has([aria-expanded="true"])::before {
+  border-left-color: var(--cyberpunk-code);
+}
+.cyberpunk-theme .cyberpunk-group-toggle {
+  font-family: var(--cyberpunk-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+@media (hover: hover) {
+  .cyberpunk-theme .cyberpunk-group-toggle:hover {
+    background: transparent;
+    color: var(--cyberpunk-code);
+  }
+}
+@media (hover: none) {
+  .cyberpunk-theme .cyberpunk-group-toggle:active {
+    background: transparent;
+    color: var(--cyberpunk-code);
+  }
+}
+.cyberpunk-theme .cyberpunk-management-list {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+}
+.cyberpunk-theme .cyberpunk-feature {
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+@media (hover: hover) {
+  .cyberpunk-theme .cyberpunk-feature:not(:disabled):hover {
+    border-color: var(--cyberpunk-code);
+    color: var(--cyberpunk-code);
+  }
+}
+@media (hover: none) {
+  .cyberpunk-theme .cyberpunk-feature:not(:disabled):active {
+    border-color: var(--cyberpunk-code);
+    color: var(--cyberpunk-code);
+  }
+}
+.cyberpunk-theme .cyberpunk-feature:focus-visible {
+  outline-offset: -3px;
+}
+.cyberpunk-theme .cyberpunk-footer {
+  font-family: var(--cyberpunk-display);
+  letter-spacing: 0.08em;
+}
+
+/* Light neon: the pale vault keeps magenta and cyan edges and fluorescent
+   command keys; the glow setting adds the halos. The dark scheme is unchanged. */
+.cyberpunk-theme:not([data-color-scheme="dark"]) .cyberpunk-brand-mark,
+.cyberpunk-theme:not([data-color-scheme="dark"])
+  .cyberpunk-topbar-actions
+  .cyberpunk-button {
+  background: var(--cyberpunk-green-fill);
+  color: var(--cyberpunk-ink);
+}
+.cyberpunk-theme:not([data-color-scheme="dark"]) .cyberpunk-card::before {
+  background: linear-gradient(
+    135deg,
+    var(--cyberpunk-neon-cyan),
+    var(--cyberpunk-line) 35%,
+    var(--cyberpunk-line) 65%,
+    var(--cyberpunk-neon-magenta)
+  );
+}
+.cyberpunk-theme:not([data-color-scheme="dark"]) .cyberpunk-meta::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--cyberpunk-neon-cyan) 20%,
+    var(--cyberpunk-neon-magenta) 80%,
+    transparent
+  );
+}
+.cyberpunk-theme:not([data-color-scheme="dark"])
+  .cyberpunk-rail-tab[aria-pressed="true"]::before {
+  background: linear-gradient(
+    var(--cyberpunk-neon-cyan),
+    var(--cyberpunk-neon-magenta)
+  );
+}
+.cyberpunk-theme:not([data-color-scheme="dark"]) .cyberpunk-topbar {
+  border-top: 6px solid;
+  border-image: repeating-linear-gradient(
+      -45deg,
+      var(--cyberpunk-ink) 0 10px,
+      var(--cyberpunk-green-fill) 10px 20px
+    )
+    6;
+}
+.cyberpunk-theme:not([data-color-scheme="dark"]) .cyberpunk-brand-name {
+  font-style: italic;
+  font-weight: 900;
+}
+.cyberpunk-theme:not([data-color-scheme="dark"]) .cyberpunk-card::after {
+  inset: 2px;
+}
+.cyberpunk-theme:not([data-color-scheme="dark"]) .cyberpunk-otp-label,
+.cyberpunk-theme:not([data-color-scheme="dark"]) .cyberpunk-otp-label::before {
+  color: var(--cyberpunk-green);
+  font-weight: 700;
+}
+.cyberpunk-theme:not([data-color-scheme="dark"]) .cyberpunk-otp-label {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+/* The hover fill is dark cyan, so the label turns white to stay readable. */
+@media (hover: hover) {
+  .cyberpunk-theme:not([data-color-scheme="dark"])
+    .cyberpunk-topbar-actions
+    .cyberpunk-button:not(:disabled):hover {
+    background: var(--cyberpunk-code);
+    color: #ffffff;
+  }
+}
+@media (hover: none) {
+  .cyberpunk-theme:not([data-color-scheme="dark"])
+    .cyberpunk-topbar-actions
+    .cyberpunk-button:not(:disabled):active {
+    background: var(--cyberpunk-code);
+    color: #ffffff;
+  }
+}
+.cyberpunk-theme:not([data-color-scheme="dark"]) .cyberpunk-progress-fill {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 6px,
+      var(--cyberpunk-panel) 6px 8px
+    ),
+    linear-gradient(90deg, var(--cyberpunk-green), var(--cyberpunk-code));
+}
+.cyberpunk-theme:not([data-color-scheme="dark"])
+  .cyberpunk-rail-tab[aria-pressed="true"] {
+  background: var(--cyberpunk-ink);
+  color: var(--cyberpunk-green-fill);
+}
+/* The magenta bar marks typing only; shown all the time it read as focus. */
+.cyberpunk-theme:not([data-color-scheme="dark"])
+  .cyberpunk-search:focus-within {
+  box-shadow:
+    inset 4px 0 0 var(--cyberpunk-neon-magenta),
+    inset 0 0 0 2px var(--cyberpunk-code);
+}
+.cyberpunk-theme:not([data-color-scheme="dark"])[data-grid="true"]::before {
+  opacity: 0.35;
+}
+/* The service rail scrolls sideways on narrow screens; a thin magenta thumb
+   (cyan in the dark scheme) replaces the grey system bar. */
+.cyberpunk-theme[data-color-scheme="dark"] .cyberpunk-rail-list {
+  scrollbar-color: color-mix(in srgb, var(--cyberpunk-code) 55%, transparent)
+    transparent;
+}
+.cyberpunk-theme:not([data-color-scheme="dark"]) .cyberpunk-rail-list {
+  scrollbar-color: color-mix(
+      in srgb,
+      var(--cyberpunk-neon-magenta) 60%,
+      transparent
+    )
+    transparent;
+}
+.cyberpunk-theme:not([data-color-scheme="dark"]) .cyberpunk-service-mark,
+.cyberpunk-theme:not([data-color-scheme="dark"])
+  .cyberpunk-rail-tab:where([aria-pressed="false"]),
+.cyberpunk-theme:not([data-color-scheme="dark"]) [data-action="display"] {
+  background: #f6f3fd;
+  box-shadow: inset 0 0 0 1px #b6abd1;
+}
+.cyberpunk-theme:not([data-color-scheme="dark"])
+  [data-action="display"][aria-expanded="true"] {
+  background: #ebe6f8;
+}
+@media (hover: hover) {
+  .cyberpunk-theme:not([data-color-scheme="dark"])
+    .cyberpunk-rail-tab:where([aria-pressed="false"]):not(:disabled):hover,
+  .cyberpunk-theme:not([data-color-scheme="dark"])
+    [data-action="display"]:not(:disabled):hover {
+    background: #ebe6f8;
+  }
+}
+@media (hover: none) {
+  .cyberpunk-theme:not([data-color-scheme="dark"])
+    .cyberpunk-rail-tab:where([aria-pressed="false"]):not(:disabled):active,
+  .cyberpunk-theme:not([data-color-scheme="dark"])
+    [data-action="display"]:not(:disabled):active {
+    background: #ebe6f8;
+  }
+}
+.cyberpunk-theme:not([data-color-scheme="dark"])[data-grid="true"] {
+  background-image:
+    radial-gradient(1100px 480px at 50% -200px, #00d4ec29, transparent 70%),
+    radial-gradient(700px 420px at 100% 100%, #ff2fb31f, transparent 70%),
+    linear-gradient(var(--cyberpunk-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cyberpunk-grid) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    32px 32px,
+    32px 32px;
+}
+.cyberpunk-theme:not([data-color-scheme="dark"])[data-glow="true"]
+  .cyberpunk-card::after {
+  background:
+    radial-gradient(
+      circle at 0 0,
+      color-mix(in srgb, var(--cyberpunk-neon-cyan) 14%, transparent),
+      transparent 140px
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      color-mix(in srgb, var(--cyberpunk-neon-magenta) 12%, transparent),
+      transparent 140px
+    ),
+    var(--cyberpunk-panel);
+}
+.cyberpunk-theme:not([data-color-scheme="dark"])[data-glow="true"]
+  .cyberpunk-brand-name {
+  text-shadow:
+    -2px 0 #00d4ecb3,
+    2px 0 #ff2fb3b3;
+}
+.cyberpunk-theme:not([data-color-scheme="dark"])[data-glow="true"]
+  .cyberpunk-topbar-actions {
+  filter: drop-shadow(0 0 8px #ff2fb366);
+}
+.cyberpunk-theme:not([data-color-scheme="dark"])[data-glow="true"]
+  .cyberpunk-reactor-ring {
+  filter: drop-shadow(0 0 4px var(--cyberpunk-neon-cyan));
+}
+.cyberpunk-theme:not([data-color-scheme="dark"])[data-glow="true"]
+  .cyberpunk-copy-code:not(:disabled)
+  .cyberpunk-otp-value {
+  /* A faint colour split reads as a glitching display without blurring the
+     digits; the title keeps the stronger split. */
+  text-shadow:
+    -1px 0 #ff2fb333,
+    1px 0 #00d4ec33;
+}
+.cyberpunk-theme:not([data-color-scheme="dark"])[data-glow="true"]
+  .cyberpunk-rail-tab[aria-pressed="true"]::before {
+  box-shadow: 0 0 10px var(--cyberpunk-neon-magenta);
+}
+
+@media (max-width: 680px) {
+  .cyberpunk-theme:not([data-color-scheme="dark"])[data-glow="true"]
+    .cyberpunk-copy-code:not(:disabled)
+    .cyberpunk-otp-value {
+    text-shadow: none;
+  }
+  .cyberpunk-theme:not([data-color-scheme="dark"])[data-grid="true"]::before {
+    opacity: 0;
+  }
+}
+/* Compact keeps the panels and takes out air the way phones do: the next
+   code and the countdown share a row and the code label is left to screen
+   readers, about 184px instead of 264px on a desktop. */
+.cyberpunk-theme[data-density="compact"]
+  .cyberpunk-account-grid
+  > .cyberpunk-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: 16px;
+  padding-top: 12px;
+  padding-bottom: 10px;
+}
+.cyberpunk-theme[data-density="compact"]
+  .cyberpunk-account-grid
+  > .cyberpunk-card
+  > *,
+.cyberpunk-theme[data-density="compact"] .cyberpunk-card .cyberpunk-copy-code,
+.cyberpunk-theme[data-density="compact"]
+  .cyberpunk-card
+  .cyberpunk-code-status {
+  grid-column: 1 / -1;
+}
+.cyberpunk-theme[data-density="compact"]
+  .cyberpunk-card
+  .cyberpunk-card-header {
+  margin-bottom: 6px;
+}
+.cyberpunk-theme[data-density="compact"] .cyberpunk-card .cyberpunk-codes {
+  display: contents;
+}
+.cyberpunk-theme[data-density="compact"] .cyberpunk-card .cyberpunk-otp-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.cyberpunk-theme[data-density="compact"] .cyberpunk-card .cyberpunk-otp-next {
+  grid-column: 1;
+  min-height: 36px;
+}
+.cyberpunk-theme[data-density="compact"]
+  .cyberpunk-account-grid
+  > .cyberpunk-card
+  > .cyberpunk-expiry {
+  grid-column: 2;
+  margin-top: 0;
+}
+.cyberpunk-theme[data-density="compact"]
+  .cyberpunk-account-grid
+  > .cyberpunk-card:has(.cyberpunk-otp-next[hidden])
+  > .cyberpunk-expiry {
+  grid-column: 1 / -1;
+}
+@media (max-width: 1180px) {
+  .cyberpunk-theme .cyberpunk-account-grid > .cyberpunk-card,
+  .cyberpunk-theme .cyberpunk-account-grid > .cyberpunk-card:nth-child(5n + 2) {
+    grid-column: span 6;
+  }
+  .cyberpunk-theme .cyberpunk-account-grid > .cyberpunk-card:nth-child(5n + 1) {
+    grid-column: span 12;
+  }
+  /* One full row, then pairs: a card left without a partner spans the row. */
+  .cyberpunk-theme
+    .cyberpunk-account-grid
+    > .cyberpunk-card:nth-child(5n + 2):last-child,
+  .cyberpunk-theme
+    .cyberpunk-account-grid
+    > .cyberpunk-card:nth-child(5n + 4):last-child {
+    grid-column: span 12;
+  }
+}
+@media (max-width: 680px) {
+  .cyberpunk-theme .cyberpunk-account-grid > .cyberpunk-card,
+  .cyberpunk-theme .cyberpunk-account-grid > .cyberpunk-card:nth-child(n) {
+    grid-column: span 12;
+  }
+  /* Phones: the next code and the countdown share one row and the code label
+     is left to screen readers, so a screen holds about five vaults, not three. */
+  .cyberpunk-theme .cyberpunk-account-grid > .cyberpunk-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 16px;
+    padding: 14px 16px 12px;
+  }
+  .cyberpunk-theme .cyberpunk-account-grid > .cyberpunk-card > *,
+  .cyberpunk-theme .cyberpunk-card .cyberpunk-copy-code,
+  .cyberpunk-theme .cyberpunk-card .cyberpunk-code-status {
+    grid-column: 1 / -1;
+  }
+  .cyberpunk-theme .cyberpunk-card .cyberpunk-card-header {
+    margin-bottom: 8px;
+  }
+  .cyberpunk-theme .cyberpunk-card .cyberpunk-codes {
+    display: contents;
+  }
+  .cyberpunk-theme .cyberpunk-card .cyberpunk-otp-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .cyberpunk-theme
+    .cyberpunk-account-grid
+    > .cyberpunk-card
+    .cyberpunk-otp-value,
+  .cyberpunk-theme
+    .cyberpunk-account-grid
+    > .cyberpunk-card:nth-child(5n + 1)
+    .cyberpunk-otp-value {
+    font-size: 32px;
+  }
+  .cyberpunk-theme .cyberpunk-card .cyberpunk-otp-next {
+    grid-column: 1;
+    min-height: 40px;
+  }
+  .cyberpunk-theme
+    .cyberpunk-account-grid
+    > .cyberpunk-card
+    > .cyberpunk-expiry {
+    grid-column: 2;
+    margin-top: 0;
+  }
+  /* HOTP has no next code; its counter takes the whole row. */
+  .cyberpunk-theme
+    .cyberpunk-account-grid
+    > .cyberpunk-card:has(.cyberpunk-otp-next[hidden])
+    > .cyberpunk-expiry {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 1023px) {
+  .cyberpunk-theme .cyberpunk-account-page {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+  .cyberpunk-theme .cyberpunk-rail {
+    position: static;
+    max-height: none;
+  }
+  .cyberpunk-theme .cyberpunk-rail-title {
+    display: none;
+  }
+  .cyberpunk-theme .cyberpunk-rail-list {
+    display: flex;
+    padding-bottom: 6px;
+    overflow-x: auto;
+  }
+  .cyberpunk-theme .cyberpunk-rail-tab {
+    flex: 0 0 auto;
+    max-width: 220px;
+  }
+}
+@media (max-width: 680px) {
+  .cyberpunk-theme {
+    padding-inline: 14px;
+  }
+  .cyberpunk-theme .cyberpunk-topbar-inner {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 10px;
+  }
+  /* The rail replaces the service select, so the view button shares the
+     search row instead of taking a row of its own. */
+  .cyberpunk-theme .cyberpunk-search {
+    grid-column: auto;
+  }
+  .cyberpunk-theme .cyberpunk-reactor {
+    width: 60px;
+    height: 60px;
+  }
+  .cyberpunk-theme .cyberpunk-reactor::before {
+    inset: 9px;
+  }
+  .cyberpunk-theme .cyberpunk-reactor-value {
+    font-size: 18px;
+  }
+  .cyberpunk-theme .cyberpunk-reactor-unit,
+  .cyberpunk-theme .cyberpunk-brand-mark {
+    display: none;
+  }
+  .cyberpunk-theme .cyberpunk-brand-name {
+    font-size: 17px;
+  }
+  .cyberpunk-theme .cyberpunk-topbar-actions .cyberpunk-button {
+    min-width: 0;
+    padding-inline: 16px;
+  }
+  .cyberpunk-theme .cyberpunk-management-groups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (forced-colors: active) {
+  .cyberpunk-theme .cyberpunk-card,
+  .cyberpunk-theme .cyberpunk-rail-tab,
+  .cyberpunk-theme .cyberpunk-management-group {
+    border: 1px solid CanvasText;
+  }
+  .cyberpunk-theme .cyberpunk-card::before,
+  .cyberpunk-theme .cyberpunk-card::after,
+  .cyberpunk-theme .cyberpunk-management-group::before {
+    display: none;
+  }
+  .cyberpunk-theme .cyberpunk-rail-tab[aria-pressed="true"] {
+    outline: 2px solid Highlight;
+  }
+}
+
+/* Copying presses the card, like the built-in view. The card copies from anywhere but
+   its menu and other controls (copyFromCard), so those do not press it. */
+.cyberpunk-theme
+  .cyberpunk-card:active:not(
+    :has(
+      .cyberpunk-account-menu :active,
+      :is(
+        a,
+        input,
+        select,
+        textarea,
+        label,
+        button:not([data-action="copy"], [data-action="next"])
+      ):active
+    )
+  )::before {
+  background: var(--cyberpunk-code);
+}
+.cyberpunk-theme
+  .cyberpunk-card:active:not(
+    :has(
+      .cyberpunk-account-menu :active,
+      :is(
+        a,
+        input,
+        select,
+        textarea,
+        label,
+        button:not([data-action="copy"], [data-action="next"])
+      ):active
+    )
+  )::after {
+  background: color-mix(
+    in srgb,
+    var(--cyberpunk-code) 16%,
+    var(--cyberpunk-panel)
+  );
+}
+
+/* The browser's tap highlight is a square over rounded controls; pressing
+   shows the control's own hover look instead (@media (hover: none) twins). */
+.cyberpunk-theme {
+  -webkit-tap-highlight-color: transparent;
+}
